@@ -3,7 +3,6 @@
 
 class Element {
 private:
-    const int size = 10;
     int positionX, positionY;
     sf::Color color;
 
