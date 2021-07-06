@@ -23,3 +23,8 @@ void ElementSystem::removeElement(int positionX, int positionY) {
     }), elements.end());
 }
 
+void ElementSystem::addElements(const std::vector<std::pair<int, int>> &positions, ElementType element) {
+    for (auto it: positions) {
+        addElement(std::make_shared<Element>(it.first, it.second, Utils::getColor(element)));
+    }
+}

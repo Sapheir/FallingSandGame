@@ -10,3 +10,7 @@ sf::Color Utils::getColor(ElementType element) {
             return sf::Color::White;
     }
 }
+
+bool Utils::insideInterval(int value, int leftBound, int rightBound) {
+    return value >= leftBound && value <= rightBound;
+}

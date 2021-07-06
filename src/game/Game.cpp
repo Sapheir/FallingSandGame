@@ -1,5 +1,14 @@
 #include "Game.h"
 
+Game::Game() {
+    if (!textFont.loadFromFile("../assets/arial.ttf")) {
+        throw std::runtime_error("Font was not found!");
+    }
+    brushText.setFont(textFont);
+    brushText.setPosition(850, 20);
+    brushText.setCharacterSize(20);
+}
+
 void Game::run() {
     while (window.isOpen()) {
         sf::Event event{};
@@ -20,16 +29,17 @@ void Game::run() {
         }
         elementSystem.update();
         window.clear(sf::Color(135,206,250));
-        window.draw(selection);
         window.draw(elementSystem);
+        window.draw(selection);
+        brushText.setString("Brush size: " + std::to_string(brush.getSize()));
+        window.draw(brushText);
         window.display();
     }
 }
 
 void Game::handleMouseEvents(sf::Event event) {
     if (event.mouseButton.button == sf::Mouse::Left) {
-        Element element(event.mouseButton.x, event.mouseButton.y, Utils::getColor(selection.getSelected()));
-        elementSystem.addElement(std::make_shared<Element>(element));
+        elementSystem.addElements(brush.getPositions(event.mouseButton.x, event.mouseButton.y), selection.getSelected());
     }
     else if (event.mouseButton.button == sf::Mouse::Right) {
         elementSystem.removeElement(event.mouseButton.x, event.mouseButton.y);
@@ -43,6 +53,12 @@ void Game::handleKeyEvents(sf::Event event) {
             break;
         case sf::Keyboard::Num2:
             selection.setElement(ElementType::STONE);
+            break;
+        case sf::Keyboard::O:
+            brush.decreaseSize();
+            break;
+        case sf::Keyboard::P:
+            brush.increaseSize();
             break;
         default:
             break;
