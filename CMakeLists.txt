@@ -12,6 +12,6 @@ set(SFML_DIR "D:\\SFML-2.5.1\\lib\\cmake\\SFML")
 find_package(SFML 2.5.1 COMPONENTS audio graphics window system REQUIRED)
 
 add_executable(FallingSandGame
-        src/main.cpp)
+        src/main.cpp src/elements/Element.cpp src/elements/Element.h src/elements/ElementSystem.cpp src/elements/ElementSystem.h src/game/Game.cpp src/game/Game.h)
 
 target_link_libraries(FallingSandGame sfml-audio sfml-graphics sfml-window sfml-system)
