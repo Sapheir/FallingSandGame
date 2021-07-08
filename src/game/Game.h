@@ -15,7 +15,8 @@ private:
 
 public:
     Game();
-    void handleMouseEvents(sf::Event event);
+    void handleAdd();
+    void handleRemove();
     void handleKeyEvents(sf::Event event);
     void run();
 };
