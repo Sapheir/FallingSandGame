@@ -6,7 +6,7 @@
 
 class Game {
 private:
-    sf::RenderWindow window{sf::VideoMode(Utils::WIDTH, Utils::HEIGHT), "Falling Sand"};
+    sf::RenderWindow window{sf::VideoMode(Utils::WIDTH, Utils::HEIGHT), "Falling Sand", sf::Style::Titlebar | sf::Style::Close};
     ElementSystem elementSystem;
     Selection selection;
     Brush brush;

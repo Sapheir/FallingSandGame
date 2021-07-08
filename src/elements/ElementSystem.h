@@ -1,18 +1,21 @@
 #pragma once
 #include <memory>
-#include "Element.h"
+#include "Sand.h"
+#include "Stone.h"
 #include "../game/Utils.h"
 
 class ElementSystem: public sf::Drawable, public sf::Transformable {
 private:
-    std::vector< std::shared_ptr<Element> > elements;
+    std::vector< std::unique_ptr<Element> > elements;
     sf::VertexArray vertices;
     void draw(sf::RenderTarget& target, sf::RenderStates states) const override;
 
 public:
-    ElementSystem() = default;
+    ElementSystem();
+    void updateElements();
     void update();
     void addElements(const std::vector<std::pair<int,int>> &positions, ElementType type);
-    void addElement(const std::shared_ptr<Element>& element);
+    void addElement(std::unique_ptr<Element> element);
+    void removeElements(const std::vector<std::pair<int,int>> &positions);
     void removeElement(int positionX, int positionY);
 };

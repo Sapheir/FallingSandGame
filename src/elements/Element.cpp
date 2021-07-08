@@ -15,10 +15,7 @@ const sf::Color &Element::getColor() const {
     return color;
 }
 
-void Element::setPositionX(int _positionX) {
-    positionX = _positionX;
-}
-
-void Element::setPositionY(int _positionY) {
-    positionY = _positionY;
+void Element::setPosition(std::pair<int, int> position) {
+    positionX = position.first;
+    positionY = position.second;
 }

@@ -1,11 +1,12 @@
 #include "Game.h"
+#include <iostream>
 
 Game::Game() {
     if (!textFont.loadFromFile("../assets/arial.ttf")) {
         throw std::runtime_error("Font was not found!");
     }
     brushText.setFont(textFont);
-    brushText.setPosition(850, 20);
+    brushText.setPosition(500, 15);
     brushText.setCharacterSize(20);
 }
 
@@ -42,7 +43,7 @@ void Game::handleMouseEvents(sf::Event event) {
         elementSystem.addElements(brush.getPositions(event.mouseButton.x, event.mouseButton.y), selection.getSelected());
     }
     else if (event.mouseButton.button == sf::Mouse::Right) {
-        elementSystem.removeElement(event.mouseButton.x, event.mouseButton.y);
+        elementSystem.removeElements(brush.getPositions(event.mouseButton.x, event.mouseButton.y));
     }
 }
 

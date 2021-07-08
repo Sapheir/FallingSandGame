@@ -14,3 +14,11 @@ sf::Color Utils::getColor(ElementType element) {
 bool Utils::insideInterval(int value, int leftBound, int rightBound) {
     return value >= leftBound && value <= rightBound;
 }
+
+int Utils::getIndex(int x, int y) {
+    return (HEIGHT-y)*WIDTH+x-1;
+}
+
+bool Utils::insideWindow(int x, int y) {
+    return insideInterval(x, 1, WIDTH) && insideInterval(y, ABOVE_LIMIT, HEIGHT);
+}

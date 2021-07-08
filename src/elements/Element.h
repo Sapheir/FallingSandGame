@@ -1,12 +1,15 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include <memory>
+#include "../game/Utils.h"
 
 class Element {
 private:
-    int positionX, positionY;
-    sf::Color color;
+    int positionX{}, positionY{};
+    sf::Color color{};
 
 public:
+    Element() = default;
     Element(int _positionX, int _positionY, sf::Color _color);
 
     [[nodiscard]] int getPositionX() const;
@@ -15,7 +18,7 @@ public:
 
     [[nodiscard]] const sf::Color &getColor() const;
 
-    void setPositionX(int _positionX);
+    void setPosition(std::pair<int, int> position);
 
-    void setPositionY(int _positionY);
+    virtual std::pair<int, int> getNextPosition(bool downLeft, bool down, bool downRight) = 0;
 };

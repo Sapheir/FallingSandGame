@@ -19,6 +19,7 @@ add_executable(FallingSandGame
         src/game/Selection.cpp src/game/Selection.h
         src/game/Utils.cpp src/game/Utils.h
         src/game/Brush.cpp src/game/Brush.h
-)
+        src/elements/Sand.cpp src/elements/Sand.h
+        src/elements/Stone.cpp src/elements/Stone.h)
 
 target_link_libraries(FallingSandGame sfml-audio sfml-graphics sfml-window sfml-system)
