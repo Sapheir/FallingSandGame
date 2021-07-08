@@ -18,7 +18,7 @@ void ElementSystem::updateElements() {
                 EmptyPositions emptyPositions = getEmptyPositions(posX, posY);
                 std::pair<int, int> nextPosition = elements[index]->getNextPosition(emptyPositions);
                 int newIndex = Utils::getIndex(nextPosition.first, nextPosition.second);
-                if (!elements[index]->isLiquid() && elements[newIndex] && elements[newIndex]->isLiquid()) {
+                if (elements[newIndex] && elements[index]->getDensity() > elements[newIndex]->getDensity()) {
                     elements[newIndex].swap(elements[index]);
                     elements[newIndex]->setPosition(nextPosition);
                     elements[index]->setPosition({posX, posY});
@@ -83,7 +83,7 @@ EmptyPositions ElementSystem::getEmptyPositions(int positionX, int positionY) {
     int indexDown = Utils::getIndex(positionX, positionY+1), indexDownLeft = Utils::getIndex(positionX-1, positionY+1), indexDownRight = Utils::getIndex(positionX+1, positionY+1);
     int indexLeft = Utils::getIndex(positionX-1, positionY), indexRight = Utils::getIndex(positionX+1, positionY);
     EmptyPositions emptyPositions;
-    emptyPositions.down = Utils::insideWindow(positionX, positionY+1) && (!elements[indexDown] || (!elements[index]->isLiquid() && elements[indexDown]->isLiquid()));
+    emptyPositions.down = Utils::insideWindow(positionX, positionY+1) && (!elements[indexDown] || (elements[index]->getDensity() > elements[indexDown]->getDensity()));
     emptyPositions.downLeft = Utils::insideWindow(positionX-1, positionY+1) && !elements[indexDownLeft];
     emptyPositions.downRight = Utils::insideWindow(positionX+1, positionY+1) && !elements[indexDownRight];
     if (Utils::insideWindow(positionX, positionY+1) && (!elements[indexDown] || !elements[indexDown]->isFalling())) {

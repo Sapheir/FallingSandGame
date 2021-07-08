@@ -10,7 +10,7 @@ private:
 
 protected:
     bool falling = false;
-    bool liquid = false;
+    float density{};
 
 public:
     Element() = default;
@@ -26,7 +26,7 @@ public:
 
     [[nodiscard]] bool isFalling() const;
 
-    [[nodiscard]] bool isLiquid() const;
+    [[nodiscard]] float getDensity() const;
 
     virtual std::pair<int, int> getNextPosition(EmptyPositions emptyPositions) = 0;
 };

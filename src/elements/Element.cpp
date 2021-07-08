@@ -24,6 +24,6 @@ bool Element::isFalling() const {
     return falling;
 }
 
-bool Element::isLiquid() const {
-    return liquid;
+float Element::getDensity() const {
+    return density;
 }

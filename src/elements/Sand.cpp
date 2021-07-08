@@ -1,6 +1,7 @@
 #include "Sand.h"
 
 Sand::Sand(int _positionX, int _positionY): Element{_positionX, _positionY, Utils::getColor(ElementType::SAND)} {
+    density = 1442;
 }
 
 std::pair<int, int> Sand::getNextPosition(EmptyPositions emptyPositions) {
