@@ -15,13 +15,18 @@ void ElementSystem::updateElements() {
         for (int posX = 1; posX <= Utils::WIDTH; posX++) {
             int index = Utils::getIndex(posX, posY);
             if (elements[index]) {
-                bool downLeft = Utils::insideWindow(posX-1, posY+1) && !elements[Utils::getIndex(posX-1, posY+1)];
-                bool down = Utils::insideWindow(posX, posY+1) && !elements[Utils::getIndex(posX, posY+1)];
-                bool downRight = Utils::insideWindow(posX+1, posY+1) && !elements[Utils::getIndex(posX+1, posY+1)];
-                std::pair<int, int> nextPosition = elements[index]->getNextPosition(downLeft, down, downRight);
+                EmptyPositions emptyPositions = getEmptyPositions(posX, posY);
+                std::pair<int, int> nextPosition = elements[index]->getNextPosition(emptyPositions);
                 int newIndex = Utils::getIndex(nextPosition.first, nextPosition.second);
-                elements[newIndex] = std::move(elements[index]);
-                elements[newIndex]->setPosition(nextPosition);
+                if (!elements[index]->isLiquid() && elements[newIndex] && elements[newIndex]->isLiquid()) {
+                    elements[newIndex].swap(elements[index]);
+                    elements[newIndex]->setPosition(nextPosition);
+                    elements[index]->setPosition({posX, posY});
+                }
+                else {
+                    elements[newIndex] = std::move(elements[index]);
+                    elements[newIndex]->setPosition(nextPosition);
+                }
             }
         }
 }
@@ -57,6 +62,9 @@ void ElementSystem::addElements(const std::vector<std::pair<int, int>> &position
             case ElementType::STONE:
                 newElement = std::make_unique<Stone>(it.first, it.second);
                 break;
+            case ElementType::WATER:
+                newElement = std::make_unique<Water>(it.first, it.second);
+                break;
             default:
                 break;
         }
@@ -68,4 +76,19 @@ void ElementSystem::removeElements(const std::vector<std::pair<int, int>> &posit
     for (auto it: positions) {
         removeElement(it.first, it.second);
     }
+}
+
+EmptyPositions ElementSystem::getEmptyPositions(int positionX, int positionY) {
+    int index = Utils::getIndex(positionX, positionY);
+    int indexDown = Utils::getIndex(positionX, positionY+1), indexDownLeft = Utils::getIndex(positionX-1, positionY+1), indexDownRight = Utils::getIndex(positionX+1, positionY+1);
+    int indexLeft = Utils::getIndex(positionX-1, positionY), indexRight = Utils::getIndex(positionX+1, positionY);
+    EmptyPositions emptyPositions;
+    emptyPositions.down = Utils::insideWindow(positionX, positionY+1) && (!elements[indexDown] || (!elements[index]->isLiquid() && elements[indexDown]->isLiquid()));
+    emptyPositions.downLeft = Utils::insideWindow(positionX-1, positionY+1) && !elements[indexDownLeft];
+    emptyPositions.downRight = Utils::insideWindow(positionX+1, positionY+1) && !elements[indexDownRight];
+    if (Utils::insideWindow(positionX, positionY+1) && (!elements[indexDown] || !elements[indexDown]->isFalling())) {
+        emptyPositions.left = Utils::insideWindow(positionX-1, positionY) && !elements[indexLeft];
+        emptyPositions.right = Utils::insideWindow(positionX+1, positionY) && !elements[indexRight];
+    }
+    return emptyPositions;
 }

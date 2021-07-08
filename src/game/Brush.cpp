@@ -24,7 +24,7 @@ std::vector< std::pair<int, int> > Brush::getPositions(int startX, int startY) c
             if (i*i+j*j>size*size) { // the current position is outside the circle
                 continue;
             }
-            if (Utils::insideInterval(positionX, 0, Utils::WIDTH) && Utils::insideInterval(positionY, Utils::ABOVE_LIMIT, Utils::HEIGHT)){
+            if (Utils::insideInterval(positionX, 1, Utils::WIDTH) && Utils::insideInterval(positionY, Utils::ABOVE_LIMIT, Utils::HEIGHT)){
                 positions.emplace_back(positionX, positionY);
             }
         }

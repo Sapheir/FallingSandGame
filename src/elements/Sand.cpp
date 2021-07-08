@@ -3,17 +3,19 @@
 Sand::Sand(int _positionX, int _positionY): Element{_positionX, _positionY, Utils::getColor(ElementType::SAND)} {
 }
 
-std::pair<int, int> Sand::getNextPosition(bool downLeft, bool down, bool downRight) {
-    if (down) {
+std::pair<int, int> Sand::getNextPosition(EmptyPositions emptyPositions) {
+    falling = true;
+    if (emptyPositions.down) {
         return {getPositionX(), getPositionY()+1};
     }
-    else if (downLeft) {
+    else if (emptyPositions.downLeft) {
         return {getPositionX()-1, getPositionY()+1};
     }
-    else if (downRight) {
+    else if (emptyPositions.downRight) {
         return {getPositionX()+1, getPositionY()+1};
     }
     else {
+        falling = false;
         return {getPositionX(), getPositionY()};
     }
 }

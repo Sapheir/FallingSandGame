@@ -70,6 +70,9 @@ void Game::handleKeyEvents(sf::Event event) {
         case sf::Keyboard::Num2:
             selection.setElement(ElementType::STONE);
             break;
+        case sf::Keyboard::Num3:
+            selection.setElement(ElementType::WATER);
+            break;
         case sf::Keyboard::O:
             brush.decreaseSize();
             break;

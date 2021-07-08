@@ -6,6 +6,8 @@ sf::Color Utils::getColor(ElementType element) {
             return sf::Color(238,232,170);
         case ElementType::STONE:
             return sf::Color(105,105,105);
+        case ElementType::WATER:
+            return sf::Color(0, 0, 205);
         default:
             return sf::Color::White;
     }

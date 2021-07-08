@@ -8,6 +8,10 @@ private:
     int positionX{}, positionY{};
     sf::Color color{};
 
+protected:
+    bool falling = false;
+    bool liquid = false;
+
 public:
     Element() = default;
     Element(int _positionX, int _positionY, sf::Color _color);
@@ -20,5 +24,9 @@ public:
 
     void setPosition(std::pair<int, int> position);
 
-    virtual std::pair<int, int> getNextPosition(bool downLeft, bool down, bool downRight) = 0;
+    [[nodiscard]] bool isFalling() const;
+
+    [[nodiscard]] bool isLiquid() const;
+
+    virtual std::pair<int, int> getNextPosition(EmptyPositions emptyPositions) = 0;
 };

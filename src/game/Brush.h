@@ -4,7 +4,7 @@
 
 class Brush {
 private:
-    int minimumSize = 1, maximumSize = 50;
+    int minimumSize = 1, maximumSize = 30;
     int size;
 public:
     Brush();

@@ -19,3 +19,11 @@ void Element::setPosition(std::pair<int, int> position) {
     positionX = position.first;
     positionY = position.second;
 }
+
+bool Element::isFalling() const {
+    return falling;
+}
+
+bool Element::isLiquid() const {
+    return liquid;
+}
