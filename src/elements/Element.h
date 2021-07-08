@@ -14,7 +14,7 @@ protected:
 
 public:
     Element() = default;
-    Element(int _positionX, int _positionY, sf::Color _color);
+    Element(int _positionX, int _positionY, sf::Color _color, float _density);
 
     [[nodiscard]] int getPositionX() const;
 

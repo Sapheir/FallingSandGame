@@ -1,6 +1,6 @@
 #include "Element.h"
 
-Element::Element(int _positionX, int _positionY, sf::Color _color): positionX{_positionX}, positionY{_positionY}, color{_color} {
+Element::Element(int _positionX, int _positionY, sf::Color _color, float _density): positionX{_positionX}, positionY{_positionY}, color{_color}, density{_density} {
 }
 
 int Element::getPositionX() const {

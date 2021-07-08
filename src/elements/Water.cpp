@@ -1,7 +1,6 @@
 #include "Water.h"
 
-Water::Water(int _positionX, int _positionY): Element{_positionX, _positionY, Utils::getColor(ElementType::WATER)} {
-    density = 997;
+Water::Water(int _positionX, int _positionY): Element{_positionX, _positionY, Utils::getColor(ElementType::WATER), Utils::getDensity(ElementType::WATER)} {
 }
 
 std::pair<int, int> Water::getNextPosition(EmptyPositions emptyPositions) {

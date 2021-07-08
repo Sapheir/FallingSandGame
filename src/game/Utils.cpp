@@ -13,6 +13,19 @@ sf::Color Utils::getColor(ElementType element) {
     }
 }
 
+float Utils::getDensity(ElementType element) {
+    switch (element) {
+        case ElementType::SAND:
+            return 1442;
+        case ElementType::STONE:
+            return 1602;
+        case ElementType::WATER:
+            return 997;
+        default:
+            return 1;
+    }
+}
+
 bool Utils::insideInterval(int value, int leftBound, int rightBound) {
     return value >= leftBound && value <= rightBound;
 }
@@ -24,3 +37,4 @@ int Utils::getIndex(int x, int y) {
 bool Utils::insideWindow(int x, int y) {
     return insideInterval(x, 1, WIDTH) && insideInterval(y, ABOVE_LIMIT, HEIGHT);
 }
+
