@@ -11,6 +11,7 @@ private:
 protected:
     bool falling = false;
     float density{};
+    int resistance = 1, damage{};
 
 public:
     Element() = default;
@@ -23,6 +24,12 @@ public:
     [[nodiscard]] const sf::Color &getColor() const;
 
     void setPosition(std::pair<int, int> position);
+
+    void applyDamage(int _damage);
+
+    [[nodiscard]] int getResistance() const;
+
+    [[nodiscard]] int getDamage() const;
 
     [[nodiscard]] bool isFalling() const;
 

@@ -18,7 +18,12 @@ void ElementSystem::updateElements() {
                 EmptyPositions emptyPositions = getEmptyPositions(posX, posY);
                 std::pair<int, int> nextPosition = elements[index]->getNextPosition(emptyPositions);
                 int newIndex = Utils::getIndex(nextPosition.first, nextPosition.second);
-                if (elements[newIndex] && elements[index]->getDensity() > elements[newIndex]->getDensity()) {
+                int resistance = elements[index]->getResistance(), receivedDamage = getReceivingDamage(posX, posY);
+                elements[index]->applyDamage(receivedDamage);
+                if (elements[index]->getResistance() <= 0 && resistance > 0) {
+                    elements[index] = std::make_unique<Cobblestone>(posX, posY);
+                }
+                else if (elements[newIndex] && elements[index]->getDensity() > elements[newIndex]->getDensity()) {
                     elements[newIndex].swap(elements[index]);
                     elements[newIndex]->setPosition(nextPosition);
                     elements[index]->setPosition({posX, posY});
@@ -65,6 +70,12 @@ void ElementSystem::addElements(const std::vector<std::pair<int, int>> &position
             case ElementType::WATER:
                 newElement = std::make_unique<Water>(it.first, it.second);
                 break;
+            case ElementType::LAVA:
+                newElement = std::make_unique<Lava>(it.first, it.second);
+                break;
+            case ElementType::COBBLESTONE:
+                newElement = std::make_unique<Cobblestone>(it.first, it.second);
+                break;
             default:
                 break;
         }
@@ -91,4 +102,19 @@ EmptyPositions ElementSystem::getEmptyPositions(int positionX, int positionY) {
         emptyPositions.right = Utils::insideWindow(positionX+1, positionY) && !elements[indexRight];
     }
     return emptyPositions;
+}
+
+int ElementSystem::getReceivingDamage(int positionX, int positionY) {
+    int damage = 0;
+    int indexUp = Utils::getIndex(positionX, positionY-1), indexDown = Utils::getIndex(positionX, positionY+1);
+    int indexLeft = Utils::getIndex(positionX-1, positionY), indexRight = Utils::getIndex(positionX+1, positionY);
+    if (Utils::insideWindow(positionX, positionY-1) && elements[indexUp])
+        damage += elements[indexUp]->getDamage();
+    if (Utils::insideWindow(positionX, positionY+1) && elements[indexDown])
+        damage += elements[indexDown]->getDamage();
+    if (Utils::insideWindow(positionX-1, positionY) && elements[indexLeft])
+        damage += elements[indexLeft]->getDamage();
+    if (Utils::insideWindow(positionX+1, positionY) && elements[indexRight])
+        damage += elements[indexRight]->getDamage();
+    return damage;
 }

@@ -27,3 +27,16 @@ bool Element::isFalling() const {
 float Element::getDensity() const {
     return density;
 }
+
+int Element::getResistance() const {
+    return resistance;
+}
+
+void Element::applyDamage(int _damage) {
+    if (resistance > 0)
+        resistance -= _damage;
+}
+
+int Element::getDamage() const {
+    return damage;
+}

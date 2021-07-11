@@ -8,6 +8,10 @@ sf::Color Utils::getColor(ElementType element) {
             return sf::Color(105,105,105);
         case ElementType::WATER:
             return sf::Color(0, 0, 205);
+        case ElementType::LAVA:
+            return sf::Color(205, 0, 0);
+        case ElementType::COBBLESTONE:
+            return sf::Color(160,160,160);
         default:
             return sf::Color::White;
     }
@@ -16,11 +20,14 @@ sf::Color Utils::getColor(ElementType element) {
 float Utils::getDensity(ElementType element) {
     switch (element) {
         case ElementType::SAND:
-            return 1442;
+            return 1500;
         case ElementType::STONE:
-            return 1602;
+            return 1600;
         case ElementType::WATER:
-            return 997;
+        case ElementType::LAVA:
+            return 1000;
+        case ElementType::COBBLESTONE:
+            return 2000;
         default:
             return 1;
     }

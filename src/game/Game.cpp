@@ -73,6 +73,12 @@ void Game::handleKeyEvents(sf::Event event) {
         case sf::Keyboard::Num3:
             selection.setElement(ElementType::WATER);
             break;
+        case sf::Keyboard::Num4:
+            selection.setElement(ElementType::LAVA);
+            break;
+        case sf::Keyboard::Num5:
+            selection.setElement(ElementType::COBBLESTONE);
+            break;
         case sf::Keyboard::O:
             brush.decreaseSize();
             break;

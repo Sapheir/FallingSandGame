@@ -3,6 +3,8 @@
 #include "Sand.h"
 #include "Stone.h"
 #include "Water.h"
+#include "Lava.h"
+#include "Cobblestone.h"
 #include "../game/Utils.h"
 
 class ElementSystem: public sf::Drawable, public sf::Transformable {
@@ -20,4 +22,5 @@ public:
     void removeElements(const std::vector<std::pair<int,int>> &positions);
     void removeElement(int positionX, int positionY);
     EmptyPositions getEmptyPositions(int positionX, int positionY);
+    int getReceivingDamage(int positionX, int positionY);
 };
