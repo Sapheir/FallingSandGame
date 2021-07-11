@@ -1,6 +1,8 @@
 # Falling Sand Game
 Falling Sand game written in C++ using the SFML library
 
+![Screenshot](https://github.com/Sapheir/FallingSandGame/blob/main/example.PNG)
+
 # Controls
 
 ##### 1 - Select sand
