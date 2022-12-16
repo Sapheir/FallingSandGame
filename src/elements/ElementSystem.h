@@ -15,7 +15,7 @@ private:
 
 public:
     ElementSystem();
-    void updateElements();
+    void updateElements(int startHeight, int endHeight);
     void update();
     void addElements(const std::vector<std::pair<int,int>> &positions, ElementType type);
     void addElement(std::unique_ptr<Element> element);

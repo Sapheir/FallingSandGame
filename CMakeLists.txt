@@ -1,15 +1,19 @@
-cmake_minimum_required(VERSION 3.10)
+cmake_minimum_required(VERSION 3.23)
 project(FallingSandGame)
 
 set(CMAKE_CXX_STANDARD 17)
-set(CMAKE_EXE_LINKER_FLAGS "-static -static-libgcc")
-set(SFML_STATIC_LIBRARIES TRUE)
+set(CMAKE_CXX_STANDARD_REQUIRED true)
 
+include(FetchContent)
+set(BUILD_SHARED_LIBS OFF)
 
-## Set the path to your SFML directory here
-set(SFML_DIR "D:\\SFML-2.5.1\\lib\\cmake\\SFML")
-
-find_package(SFML 2.5.1 COMPONENTS audio graphics window system REQUIRED)
+# SFML
+FetchContent_Declare(
+        SFML
+        GIT_REPOSITORY "https://github.com/SFML/SFML.git"
+        GIT_TAG        "2.5.1"
+)
+FetchContent_MakeAvailable(SFML)
 
 add_executable(FallingSandGame
         src/main.cpp

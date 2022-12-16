@@ -17,8 +17,8 @@ struct EmptyPositions {
 
 class Utils {
 public:
-    static const int WIDTH = 640, HEIGHT = 360, ABOVE_LIMIT = 20;
-    static const int NR_ELEMENTS = 5;
+    static constexpr int WIDTH = 640, HEIGHT = 360, ABOVE_LIMIT = 20;
+    static constexpr int NR_ELEMENTS = 5;
     static sf::Color getColor(ElementType element);
     static float getDensity(ElementType element);
     static bool insideInterval(int value, int leftBound, int rightBound);

@@ -1,4 +1,5 @@
 #include "ElementSystem.h"
+#include <thread>
 
 ElementSystem::ElementSystem() {
     elements.resize(Utils::WIDTH*Utils::HEIGHT);
@@ -10,8 +11,8 @@ void ElementSystem::draw(sf::RenderTarget &target, sf::RenderStates states) cons
     target.draw(vertices, states);
 }
 
-void ElementSystem::updateElements() {
-    for (int posY = Utils::HEIGHT; posY >= Utils::ABOVE_LIMIT; posY--)
+void ElementSystem::updateElements(const int startHeight, const int endHeight) {
+    for (int posY = startHeight; posY >= endHeight; posY--)
         for (int posX = 1; posX <= Utils::WIDTH; posX++) {
             int index = Utils::getIndex(posX, posY);
             if (elements[index]) {
@@ -38,7 +39,19 @@ void ElementSystem::updateElements() {
 
 void ElementSystem::update() {
     vertices.clear();
-    updateElements();
+    int noThreads = (int)std::thread::hardware_concurrency();
+    std::vector< std::thread > elementThreads(noThreads);
+    int totalRows = Utils::HEIGHT - Utils::ABOVE_LIMIT + 1;
+    int amountPerThread = totalRows / noThreads;
+    int currentThreadStart = Utils::HEIGHT, currentThreadEnd = std::max(Utils::ABOVE_LIMIT, currentThreadStart - amountPerThread);
+    for (int i = 0; i < noThreads; i++) {
+        elementThreads[i] = std::thread(&ElementSystem::updateElements, this, currentThreadStart, currentThreadEnd);
+        currentThreadStart = currentThreadEnd - 1;
+        currentThreadEnd = std::max(Utils::ABOVE_LIMIT, currentThreadStart - amountPerThread);
+    }
+    for (int i = 0; i < noThreads; i++) {
+        elementThreads[i].join();
+    }
     for (const auto& element: elements) {
         if (element)
             vertices.append(sf::Vertex(sf::Vector2f((float)element->getPositionX(), (float)element->getPositionY()), element->getColor()));
